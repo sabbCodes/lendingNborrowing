@@ -1,7 +1,7 @@
 use anchor_lang::prelude::*;
 use anchor_spl::{
   associated_token::AssociatedToken,
-  token_interface::{Mint, TokenAccount, TokenInterface, TransferChecked}
+  token_interface::{self, Mint, TokenAccount, TokenInterface, TransferChecked}
 };
 
 use std::f32::consts::E;
@@ -59,7 +59,7 @@ pub fn process_withdraw(ctx: Context<Withdraw>, amount: u64) -> Result<()> {
   if ctx.accounts.mint.to_account_info().key() == user.usdc_address {
     deposited_value = user.deposited_usdc;
   } else {
-    deposited_value = user.deposit_sol;
+    deposited_value = user.deposited_sol;
   }
 
   let time_diff = user.last_updated - Clock::get()?.unix_timestamp;
